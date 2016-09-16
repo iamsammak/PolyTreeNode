@@ -44,5 +44,32 @@ class PolyTreeNode
     raise "Node not a child!" if child.parent == nil
   end
 
+  def dfs(target)
+    return self if self.value == target
+    self.children.each do |child|
+      result = child.dfs(target)
+      return result if result #unless result.nil?
+    end
+    nil
+  end
 
+  def bfs(target)
+    queue = [self]
+
+    until queue.empty?
+      return queue[0] if queue[0].value == target
+      queue += queue[0].children
+      queue.shift
+    end
+    nil
+  end
 end
+
+# node1 = PolyTreeNode.new('root')
+# node2 = PolyTreeNode.new('child1')
+# node3 = PolyTreeNode.new('child2')
+#
+# node2.parent = node1
+# node3.parent = node1
+# node4 = PolyTreeNode.new('child3')
+# node4.parent = node3
